@@ -2,6 +2,7 @@
 using Loja.DTOs.Request;
 using Loja.DTOs.Response;
 using Loja.Models;
+using System;
 
 namespace Loja.Services
 {
@@ -33,6 +34,11 @@ namespace Loja.Services
                     Largura = produtos.Largura,
                     Comprimento = produtos.Comprimento,
                 };
+
+                if (produto.Altura <= 0 || produto.Largura <= 0 || produto.Comprimento <= 0)
+                {
+                    throw new Exception($"Dimensões inválidas para o produto {produto.Nome}");
+                }
 
                 var caixaCerta = caixasDisponiveis
                     .OrderBy(c => c.Volume)
